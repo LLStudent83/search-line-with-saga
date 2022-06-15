@@ -1,0 +1,20 @@
+.Popup__wrapper {
+    width: 20rem;
+    height: 4rem;
+    padding: 0.1rem 1rem;
+    background-color: #f8d7da;
+    border-radius: 0.3rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Popup__main {
+    margin: 0;
+    line-height: 1rem;
+}
