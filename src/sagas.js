@@ -1,15 +1,10 @@
 /* eslint-disable max-len */
 import {
   call, put, takeLatest, spawn,
-  debounce, fork, take
+  debounce,
 } from 'redux-saga/effects';
 import { setField } from './features/search/searchSlice';
 import searchSkills from './api/index';
-
-// worker
-function* handleChangeSearchSaga({ payload }) {
-  yield put(setField({ loading: true, error: null, search: payload.search }));
-}
 
 // --------------------------------
 function* handleSearchSkillsSaga(action) {
@@ -26,12 +21,9 @@ function filterSearchSkillsSaga({ type, payload }) {
 }
 
 function* watchSearchSkillsSaga() {
-  while (true) {
-    // const action = yield take(filterSearchSkillsSaga);
-    // yield fork(handleSearchSkillsSaga, action);
-    yield takeLatest(filterSearchSkillsSaga, handleSearchSkillsSaga);
-  }
+  yield takeLatest(filterSearchSkillsSaga, handleSearchSkillsSaga);
 }
+//--------------------------------------------------------------------------
 
 function filterChangeSearchAction({ type, payload }) {
   return type === 'search/changeSearchField' && payload.search.trim() !== '';
@@ -39,6 +31,10 @@ function filterChangeSearchAction({ type, payload }) {
 
 function* watchChangeSearchSaga() {
   yield debounce(600, filterChangeSearchAction, handleChangeSearchSaga);
+}
+
+function* handleChangeSearchSaga({ payload }) {
+  yield put(setField({ loading: true, error: null, search: payload.search }));
 }
 
 export default function* saga() {
